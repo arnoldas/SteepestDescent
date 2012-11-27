@@ -12,12 +12,12 @@
 #define N 2
 using namespace std;
 
-// Vektoriaus begalines (max) normos funkcijos deklaracija 
+// Vektoriaus begalines (max) normos funkcijos deklaracija
 double Vector_Max_Norm(double v[], int n);
 
 // Greiciausio nusileidimo (angl. Steepest Descent) metodo deklaracija
 int  Steepest_Descent(double (*f)(double *), void (*df)(double *, double *),
-     int (*stopping_rule)(double*, double, double*, double, double*, int, int), 
+     int (*stopping_rule)(double*, double, double*, double, double*, int, int),
                           double a[], double *fa, double *dfa, double cutoff,
 						double cutoff_scale_factor, double tolerance, int n);
 
@@ -45,15 +45,19 @@ iteration, int n){
 	for(int i = 0; i < n; ++i) xa[i] = x[i]-a[i];
 	double xEps = Vector_Max_Norm(xa, 2); // Argumento skirtumo norma
 	double dfaEps = Vector_Max_Norm(dfa, 2); // Gradiento norma
-	if(iteration > 3) 
+	if(iteration > 3)
 		return -6;
 	else
 		return 0;
 }
 
+double RandomSearch(*a);//musu montecarlo funkcija     as manau turetu buti cia void o ne double
+
 int main(int argc, const char * argv[])
 {
 	double region[] = {-1.9, 1.9, -1.1, 1.1};
+	double a[6];
+	RandomSearch(a); /*!!!!!!!!!!!!!!!!!!!!!uzdavinio esme perduoti i a geriausius montecarlo metodu surastas 3 geriausias reiksmes!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 	double a[N] = {0.0, 1.0}; // N-matis Vektorius
 	/*srand(time(0)); // Naudoja vis kita seed'a
 	double a[N]; // N-matis Vektorius
@@ -61,7 +65,7 @@ int main(int argc, const char * argv[])
         a[i] = GetRandomNumber(region[2*i], region[2*i+1]);
     }*/
 	double fa = SixHumpCamelBack(a); // Funkcijos reiksme pradiniame taske a
-	double dfa[N]; 
+	double dfa[N];
 	SixHumpCamelBackGradient(a, dfa); // Funkcijos gradiento reiksme taske a
 	double cutoff = 1.0, cutoff_scale_factor = 1.0; // Pap. parametrai
 	double tolerance = 0.01;
@@ -73,7 +77,7 @@ int main(int argc, const char * argv[])
 			cout << "Success" << endl;
 			break;
 		case -1:
-			cout << "In the line search three points are collinear." << endl; 
+			cout << "In the line search three points are collinear." << endl;
 			break;
 		case -2:
 			cout << "In the line search the extremum of the parabola through the three points is a maximum." << endl;
